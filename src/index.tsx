@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ThemeProvider } from './context/themeProvider'
 
 import App from './App'
 import * as serviceWorker from './serviceWorker'
@@ -10,7 +11,9 @@ import { store } from './redux/store'
 const WithProvider = () => (
   <Provider store={store}>
     <Router>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Router>
   </Provider>
 )
