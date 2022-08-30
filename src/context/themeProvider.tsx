@@ -1,16 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ThemeContext from './themeContext'
 
 export function ThemeProvider({ children }: any) {
-  const [countries, setCountries] = useState('finland')
+  let themeState = localStorage.getItem('theme') === 'true'
+  console.log(themeState)
 
-  const name = 'sweden'
-  function toggleCountries() {
-    setCountries(name)
+  const [darkTheme, setDarkTheme] = useState(themeState)
+  console.log(darkTheme)
+
+  useEffect(() => {
+    localStorage.setItem('theme', `${darkTheme}`)
+  }, [darkTheme])
+
+  const toggleTheme = () => {
+    setDarkTheme((prev) => !prev)
+  }
+
+  const themeStyle = {
+    backgroundColor: darkTheme ? '#fff' : '#000',
+    color: darkTheme ? '#000' : '#fff',
+    height: '100vh',
   }
 
   return (
-    <ThemeContext.Provider value={{ countries, toggleCountries }}>
+    <ThemeContext.Provider value={{ darkTheme, toggleTheme, themeStyle }}>
       {children}
     </ThemeContext.Provider>
   )

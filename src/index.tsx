@@ -8,15 +8,17 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { store } from './redux/store'
 
-const WithProvider = () => (
-  <Provider store={store}>
-    <Router>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </Router>
-  </Provider>
-)
+const WithProvider = () => {
+  return (
+    <Provider store={store}>
+      <Router>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </Router>
+    </Provider>
+  )
+}
 
 ReactDOM.render(<WithProvider />, document.getElementById('root'))
 
