@@ -1,28 +1,31 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import ThemeContext from '../context/themeContext'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 
-import { firstName, gender } from '../redux/slices/countrySlice'
+import { fetchCountries } from '../redux/slices/countrySlice'
+import { AppDispatch, RootState } from '../redux/store'
 
 export default function Home() {
-  const dispatch = useDispatch()
-  const profiles: any = useSelector((state) => state)
-  console.log('profile:', profiles)
+  const dispatch = useDispatch<AppDispatch>()
+  const { countries } = useSelector((state: RootState) => state)
 
-  function handleCount() {
-    dispatch(firstName())
-  }
-
-  function handleDeCount() {
-    dispatch(gender())
+  function fetchData() {
+    dispatch(fetchCountries())
   }
 
   return (
     <div>
-      <h1>Test page</h1>
-      <Button onClick={handleCount}>name</Button>
-      <Button onClick={handleDeCount}>gender</Button>
+      <Typography variant="h1" align="center">
+        Country Display
+      </Typography>
+      <Button variant="contained" onClick={fetchData}>
+        fetch
+      </Button>
+      {countries.countryData.map((country) => (
+        <>
+          <li>{country.name.common}</li>
+        </>
+      ))}
     </div>
   )
 }

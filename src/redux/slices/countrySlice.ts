@@ -1,38 +1,55 @@
-import { createSlice } from '@reduxjs/toolkit'
-// createAsyncThunk
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
-export interface countryType {
-  name: string
-  sex: string
+export const fetchCountries = createAsyncThunk('country/fetchAll', async () => {
+  const URL =
+    'https://restcountries.com/v3.1/all?fields=name,languages,currencies,population,flags'
+  const response = await axios.get(URL)
+
+  return response
+})
+
+export interface CountryType {
+  name: {
+    common: string
+  }
+  languages: {
+    [name: string]: string
+  }
+  currencies: {
+    [name: string]: {
+      name: string
+    }
+  }
+  population: number
+  flags: {
+    png: string
+  }
 }
 
-const initialState: countryType = {
-  name: 'Udoka',
-  sex: 'male',
+export interface SliceState {
+  countryData: CountryType[]
+  isLoading: boolean
 }
 
-// export const incrementAsync = createAsyncThunk(
-//   'counter/fetchCount',
-//   async (amount: number) => {
-//     const response = await fetchCount(amount)
-//     // The value we return becomes the `fulfilled` action payload
-//     return response.data
-//   }
-// )
+const initialState: SliceState = {
+  countryData: [],
+  isLoading: !true,
+}
 
-export const counterSlice = createSlice({
-  name: 'counters',
+export const countrySlice = createSlice({
+  name: 'countries',
   initialState,
 
-  reducers: {
-    firstName: (state) => {
-      console.log('triggered reducer firstname', state.name)
-    },
-    gender: (state) => {
-      console.log('triggered reducer gender', state.sex)
-    },
+  reducers: {},
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchCountries.fulfilled, (state, action) => {
+      console.log('action:', action)
+      state.countryData = action.payload.data
+    })
   },
 })
 
-export const { firstName, gender } = counterSlice.actions
-export default counterSlice.reducer
+// export const {} = countrySlice.actions
+export default countrySlice.reducer
