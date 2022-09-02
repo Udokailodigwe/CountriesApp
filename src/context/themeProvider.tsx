@@ -17,7 +17,6 @@ export function ThemeProvider({ children }: any) {
   const themeStyle = {
     backgroundColor: lightTheme ? '#fff' : '#000',
     color: lightTheme ? '#000' : '#fff',
-    height: '100vh',
   }
 
   return (
