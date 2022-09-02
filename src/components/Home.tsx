@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
+import ThemeContext from '../context/themeContext'
 
 import { fetchCountries } from '../redux/slices/countrySlice'
 import {
@@ -16,6 +17,7 @@ import {
 } from '@mui/material'
 
 export default function Home() {
+  const { themeStyle } = useContext(ThemeContext)
   const dispatch = useDispatch<AppDispatch>()
   const { countries } = useSelector((state: RootState) => state)
 
@@ -32,8 +34,8 @@ export default function Home() {
         <Typography>Wait for countries list...</Typography>
       )}
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ minWidth: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+        <TableContainer sx={{ minWidth: 440 }} style={themeStyle}>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Flag</TableCell>
