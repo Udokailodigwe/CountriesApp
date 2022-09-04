@@ -19,30 +19,28 @@ export type Product = {
 export type AddProductAction = {
   type: typeof ADD_PRODUCT
   payload: {
-    product: Product,
+    product: Product
   }
 }
 
 export type RemoveProductAction = {
   type: typeof REMOVE_PRODUCT
   payload: {
-    product: Product,
+    product: Product
   }
 }
 
 export type ToggleDialogAction = {
   type: typeof TOGGLE_DIALOG
   payload: {
-    dialog: DialogType,
+    dialog: DialogType
   }
 }
 
 export type UiActions = ToggleDialogAction
 
 // Use this union in reducer
-export type ProductActions =
-  | AddProductAction
-  | RemoveProductAction
+export type ProductActions = AddProductAction | RemoveProductAction
 
 export type ProductState = {
   inCart: Product[]
@@ -56,6 +54,26 @@ export type UiState = {
 }
 
 export type AppState = {
-  product: ProductState,
-  ui: UiState,
+  product: ProductState
+  ui: UiState
+}
+
+export type CountryType = {
+  name: {
+    common: string
+  }
+  capital: String[]
+  languages: {
+    [name: string]: string
+  }
+  currencies: {
+    [name: string]: {
+      name: string
+    }
+  }
+  population: number
+  flags: {
+    png: string
+  }
+  quantity: number
 }
