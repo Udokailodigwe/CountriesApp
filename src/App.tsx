@@ -1,15 +1,18 @@
 import React, { useContext } from 'react'
 import Routes from './Routes'
+
 import ThemeContext from './context/themeContext'
 
-import Button from '@mui/material/Button'
+import Navbar from '../src/components/Navbar/Navbar'
+
+import './App.css'
 
 export default function App() {
-  const { themeStyle, toggleTheme } = useContext(ThemeContext)
+  const { themeStyle } = useContext(ThemeContext)
 
   return (
     <div style={themeStyle} className="App">
-      <Button onClick={toggleTheme}>toggle</Button>
+      <Navbar />
       <Routes />
     </div>
   )
