@@ -6,4 +6,8 @@ export default makeStyles(() => ({
     color: 'black',
     fontSize: '18px',
   },
+  box: {
+    textAlign: 'center',
+    margin: '20px',
+  },
 }))

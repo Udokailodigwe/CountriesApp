@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import { removeFavorite } from '../../redux/slices/favoriteListSlice'
+import {
+  removeFavorite,
+  clearFavorite,
+} from '../../redux/slices/favoriteListSlice'
 
 import { CountryType } from '../../types'
 
 import ClearIcon from '@mui/icons-material/Clear'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import {
   Box,
   Typography,
@@ -28,8 +32,10 @@ export default function Favorite() {
   const { favorites } = useSelector((state: RootState) => state)
 
   const handleDeleteFavorite = (favorite: CountryType) => {
-    console.log(handleDeleteFavorite)
     dispatch(removeFavorite(favorite))
+  }
+  const handleDeleteAllFavorite = () => {
+    dispatch(clearFavorite())
   }
 
   return (
@@ -46,42 +52,51 @@ export default function Favorite() {
             </Link>
           </Box>
         ) : (
-          <TableContainer sx={{ minWidth: 440 }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Flag</TableCell>
-                  <TableCell align="right">Country</TableCell>
-                  <TableCell align="right">Capital</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {favorites.favoriteList.map((favorite) => {
-                  return (
-                    <TableRow key={favorite.name.common}>
-                      <TableCell component="th" scope="row">
-                        <img
-                          src={favorite.flags.png}
-                          alt="flag"
-                          style={{ height: 50, width: 70 }}
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        {favorite.name.common}
-                      </TableCell>
-                      <TableCell align="right">{favorite.capital}</TableCell>
-                      <TableCell align="right">
-                        <Box onClick={() => handleDeleteFavorite(favorite)}>
-                          <ClearIcon />
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <>
+            <Box
+              className={classes.box}
+              onClick={() => handleDeleteAllFavorite()}
+            >
+              <DeleteForeverIcon />
+              <span>Clear all</span>
+            </Box>
+            <TableContainer sx={{ minWidth: 440 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Flag</TableCell>
+                    <TableCell align="right">Country</TableCell>
+                    <TableCell align="right">Capital</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {favorites.favoriteList.map((favorite) => {
+                    return (
+                      <TableRow key={favorite.name.common}>
+                        <TableCell component="th" scope="row">
+                          <img
+                            src={favorite.flags.png}
+                            alt="flag"
+                            style={{ height: 50, width: 70 }}
+                          />
+                        </TableCell>
+                        <TableCell align="right">
+                          {favorite.name.common}
+                        </TableCell>
+                        <TableCell align="right">{favorite.capital}</TableCell>
+                        <TableCell align="right">
+                          <Box onClick={() => handleDeleteFavorite(favorite)}>
+                            <ClearIcon />
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </>
         )}
       </Box>
     </>
