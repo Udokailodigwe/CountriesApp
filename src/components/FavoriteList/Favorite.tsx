@@ -48,7 +48,7 @@ export default function Favorite() {
           <Box>
             <Typography align="center">Favorite List is empty.</Typography>
             <Link to="/" className={classes.link}>
-              Return home{' '}
+              Return home
             </Link>
           </Box>
         ) : (
