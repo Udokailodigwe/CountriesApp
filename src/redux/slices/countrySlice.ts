@@ -26,16 +26,19 @@ export interface CountryType {
   flags: {
     png: string
   }
+  quantity: number
 }
 
 export interface SliceState {
   countryData: CountryType[]
   isLoading: boolean
+  error: boolean
 }
 
 const initialState: SliceState = {
   countryData: [],
   isLoading: true,
+  error: !true,
 }
 
 export const countrySlice = createSlice({
@@ -48,13 +51,17 @@ export const countrySlice = createSlice({
     builder.addCase(fetchCountries.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(fetchCountries.fulfilled, (state, action) => {
-      console.log('action:', action)
-      state.countryData = action.payload.data
+    builder.addCase(fetchCountries.rejected, (state) => {
       state.isLoading = false
+      state.error = true
+    })
+    builder.addCase(fetchCountries.fulfilled, (state, action) => {
+      const response = action.payload.data
+      state.countryData = response
+      state.isLoading = false
+      state.error = !true
     })
   },
 })
 
-// export const {} = countrySlice.actions
 export default countrySlice.reducer
