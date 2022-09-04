@@ -1,11 +1,16 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import ThemeContext from '../context/themeContext'
-
 import { fetchCountries } from '../redux/slices/countrySlice'
+import { addFavorite, removeFavorite } from '../redux/slices/favoriteListSlice'
+
+import { CountryType } from '../types'
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import {
+  Box,
   Typography,
   Table,
   TableBody,
@@ -13,11 +18,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
 } from '@mui/material'
 
 export default function Home() {
-  const { themeStyle } = useContext(ThemeContext)
   const dispatch = useDispatch<AppDispatch>()
   const { countries } = useSelector((state: RootState) => state)
 
@@ -25,19 +28,28 @@ export default function Home() {
     dispatch(fetchCountries())
   }, [dispatch])
 
+  function handleAddFavorite(country: CountryType) {
+    dispatch(addFavorite(country))
+  }
+  function handleDeleteFavorite(country: CountryType) {
+    dispatch(removeFavorite(country))
+  }
+
   return (
     <div>
       <Typography variant="h3" align="center">
         Country Display
       </Typography>
-      {countries.isLoading && (
+      {countries.isLoading ? (
         <Typography>Wait for countries list...</Typography>
-      )}
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ minWidth: 440 }} style={themeStyle}>
+      ) : countries.error ? (
+        <Typography>Something went wrong! Try again...</Typography>
+      ) : (
+        <TableContainer sx={{ minWidth: 440 }}>
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>Favorite</TableCell>
                 <TableCell>Flag</TableCell>
                 <TableCell align="left">Country</TableCell>
                 <TableCell align="center">Capital</TableCell>
@@ -48,9 +60,16 @@ export default function Home() {
             </TableHead>
             <TableBody>
               {countries.countryData.map((country) => {
-                console.log(country)
                 return (
                   <TableRow key={country.name.common}>
+                    <TableCell>
+                      <Box onClick={() => handleAddFavorite(country)}>
+                        <FavoriteBorderIcon />
+                      </Box>
+                      <Box onClick={() => handleDeleteFavorite(country)}>
+                        <FavoriteIcon />
+                      </Box>
+                    </TableCell>
                     <TableCell component="th" scope="row">
                       <img
                         src={country.flags.png}
@@ -73,7 +92,7 @@ export default function Home() {
             </TableBody>
           </Table>
         </TableContainer>
-      </Paper>
+      )}
     </div>
   )
 }
