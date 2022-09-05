@@ -4,9 +4,8 @@ export default makeStyles(() => ({
   appbar: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: 'pink',
+    backgroundColor: 'aqua',
     padding: '30px',
-    borderRadius: '20px',
     position: 'sticky',
     top: 0,
   },
