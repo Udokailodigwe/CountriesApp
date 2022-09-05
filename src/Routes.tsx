@@ -1,15 +1,15 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Country from './components/Country'
-import Favorite from './components/FavoriteList/Favorite'
-import Home from './components/Home'
+import Country from './Pages/Country/Country'
+import Favorite from './Pages/FavoriteList/Favorite'
+import Home from './Pages/Home/Home'
 
 const Routes = () => {
   return (
     <div>
       <Switch>
-        <Route path="/country/:id" component={Country} />
+        <Route path="/country/:name" component={Country} />
         <Route path="/favorite" component={Favorite} />
         <Route path="/" exact component={Home} />
       </Switch>

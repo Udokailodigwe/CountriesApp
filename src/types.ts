@@ -53,11 +53,6 @@ export type UiState = {
   }
 }
 
-export type AppState = {
-  product: ProductState
-  ui: UiState
-}
-
 export type CountryType = {
   name: {
     common: string
@@ -76,4 +71,16 @@ export type CountryType = {
     png: string
   }
   quantity: number
+}
+
+export type countriesState = {
+  countryData: CountryType[]
+  isLoading: boolean
+  error: boolean
+}
+
+export type AppState = {
+  product: ProductState
+  ui: UiState
+  countries: countriesState
 }

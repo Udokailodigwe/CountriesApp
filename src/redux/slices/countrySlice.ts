@@ -29,13 +29,13 @@ export interface CountryType {
   quantity: number
 }
 
-export interface SliceState {
+export interface countriesState {
   countryData: CountryType[]
   isLoading: boolean
   error: boolean
 }
 
-const initialState: SliceState = {
+const initialState: countriesState = {
   countryData: [],
   isLoading: true,
   error: !true,

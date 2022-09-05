@@ -23,7 +23,7 @@ export default function Navbar() {
             <FavoriteIcon />
           </Tooltip>
         </Link>
-        <Button onClick={toggleTheme}>toggle</Button>
+        <Button onClick={toggleTheme}>THEME</Button>
       </Box>
     </div>
   )
