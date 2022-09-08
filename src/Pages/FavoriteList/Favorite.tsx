@@ -8,12 +8,11 @@ import {
   clearFavorite,
 } from '../../redux/slices/favoriteListSlice'
 
-import { CountryType } from '../../types'
+import { Country } from '../../types'
 
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {
-  Button,
   Box,
   Typography,
   Table,
@@ -32,30 +31,41 @@ export default function Favorite() {
   const dispatch = useDispatch()
   const { favorites } = useSelector((state: RootState) => state)
 
-  const handleDeleteFavorite = (favorite: CountryType) => {
+  const handleDeleteFavorite = (favorite: Country) => {
     dispatch(removeFavorite(favorite))
   }
   const handleDeleteAllFavorite = () => {
     dispatch(clearFavorite())
   }
 
+  const isEmpty = favorites.favoriteList.length === 0
+
   return (
-    <>
+    <Box className={classes.main}>
       <Box>
-        <Typography variant="h3" align="center">
+        <Typography className={classes.header} align="center">
           FAVORITE COUNTRIES
         </Typography>
-        {favorites.favoriteList.length === 0 ? (
+        {isEmpty ? (
           <Box>
             <Typography align="center">Favorite List is empty.</Typography>
             <Link to="/" className={classes.link}>
-              Return home
+              Back
             </Link>
           </Box>
         ) : (
           <>
+            <Link to="/" className={classes.link}>
+              Back
+            </Link>
+            <button
+              className={classes.button}
+              onClick={() => handleDeleteAllFavorite()}
+            >
+              Clear all
+            </button>
             <TableContainer sx={{ minWidth: 440 }}>
-              <Table>
+              <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Flag</TableCell>
@@ -76,7 +86,12 @@ export default function Favorite() {
                           />
                         </TableCell>
                         <TableCell align="right">
-                          {favorite.name.common}
+                          <Link
+                            className={classes.link}
+                            to={`/country/${favorite.name.common}`}
+                          >
+                            {favorite.name.common}
+                          </Link>
                         </TableCell>
                         <TableCell align="right">{favorite.capital}</TableCell>
                         <TableCell align="right">
@@ -94,16 +109,9 @@ export default function Favorite() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button
-              className={classes.box}
-              onClick={() => handleDeleteAllFavorite()}
-              startIcon={<DeleteIcon />}
-            >
-              Clear all
-            </Button>
           </>
         )}
       </Box>
-    </>
+    </Box>
   )
 }

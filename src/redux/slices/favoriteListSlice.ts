@@ -1,18 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { CountryType } from '../../types'
+import { Country } from '../../types'
 
 export interface FavoriteState {
-  favoriteList: CountryType[]
-  quantity: number
+  favoriteList: Country[]
 }
 
-const setFavorite = localStorage.getItem('favoriteItem')
+const favorite = localStorage.getItem('favoriteItem')
   ? JSON.parse(localStorage.getItem('favoriteItem') || '{}')
   : []
 
 const initialState: FavoriteState = {
-  favoriteList: setFavorite,
-  quantity: 1,
+  favoriteList: favorite,
 }
 
 const favoriteListSlice = createSlice({
@@ -20,18 +18,12 @@ const favoriteListSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action) => {
-      //find item index
-      const favoriteIndex = state.favoriteList.findIndex(
+      const isDuplicate = state.favoriteList.some(
         (fav) => fav.name.common === action.payload.name.common
       )
-      //if found index increase quantity only
-      const quantity = state.quantity
-      if (favoriteIndex >= 0) {
-        state.favoriteList[favoriteIndex].quantity += 1
-      } else {
-        //add new favorite
-        const favoriteQuantity = { quantity, ...action.payload }
-        state.favoriteList = [...state.favoriteList, favoriteQuantity]
+      if (!isDuplicate) {
+        const favCountrty = action.payload
+        state.favoriteList = [...state.favoriteList, favCountrty]
       }
       localStorage.setItem('favoriteItem', JSON.stringify(state.favoriteList))
     },
