@@ -2,12 +2,21 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(() => ({
   link: {
-    textDecoration: 'none',
-    color: 'black',
-    fontSize: '18px',
+    textDecoration: 'underline',
+    color: 'inherit',
   },
-  box: {
-    textAlign: 'center',
-    margin: '20px',
+  button: {
+    float: 'right',
+    padding: '3px',
+    backgroundColor: 'red',
+    border: 'none',
+    borderRadius: '3px',
+  },
+  header: {
+    fontWeight: 300,
+    marginBotton: '50px',
+  },
+  main: {
+    padding: '20px 100px',
   },
 }))
