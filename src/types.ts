@@ -53,7 +53,7 @@ export type UiState = {
   }
 }
 
-export type CountryType = {
+export type Country = {
   name: {
     common: string
   }
@@ -70,11 +70,11 @@ export type CountryType = {
   flags: {
     png: string
   }
-  quantity: number
 }
 
 export type countriesState = {
-  countryData: CountryType[]
+  countryData: Country[]
+  countryDataRef: Country[]
   isLoading: boolean
   error: boolean
 }
@@ -83,4 +83,11 @@ export type AppState = {
   product: ProductState
   ui: UiState
   countries: countriesState
+}
+
+export type Sort<T> = {
+  a: Country
+  b: Country
+  key: T
+  sortBy: 'asc' | 'desc'
 }
