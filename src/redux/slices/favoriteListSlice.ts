@@ -19,18 +19,18 @@ const favoriteListSlice = createSlice({
   reducers: {
     addFavorite: (state, action) => {
       const isDuplicate = state.favoriteList.some(
-        (fav) => fav.name.common === action.payload.name.common
+        (fav) => fav.name === action.payload.name
       )
       if (!isDuplicate) {
-        const favCountrty = action.payload
-        state.favoriteList = [...state.favoriteList, favCountrty]
+        const favCountry = action.payload
+        state.favoriteList = [...state.favoriteList, favCountry]
       }
       localStorage.setItem('favoriteItem', JSON.stringify(state.favoriteList))
     },
 
     removeFavorite: (state, action) => {
       const newFavoriteList = state.favoriteList.filter(
-        (fav) => fav.name.common !== action.payload.name.common
+        (fav) => fav.name !== action.payload.name
       )
       state.favoriteList = newFavoriteList
       localStorage.setItem('favoriteItem', JSON.stringify(state.favoriteList))

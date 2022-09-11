@@ -7,8 +7,21 @@ export default makeStyles(() => ({
   },
   button: {
     float: 'right',
+    clear: 'both',
     padding: '3px',
     backgroundColor: 'red',
+    border: 'none',
+    borderRadius: '3px',
+    cursor: 'pointer',
+  },
+  home_button: {
+    cursor: 'pointer',
+    marginTop: '20px',
+    color: '#000',
+    float: 'left',
+    clear: 'both',
+    padding: '3px',
+    backgroundColor: '#bada55',
     border: 'none',
     borderRadius: '3px',
   },
@@ -17,6 +30,6 @@ export default makeStyles(() => ({
     marginBotton: '50px',
   },
   main: {
-    padding: '20px 100px',
+    padding: '20px 20px',
   },
 }))

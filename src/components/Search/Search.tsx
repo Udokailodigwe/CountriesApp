@@ -25,7 +25,7 @@ function Search() {
     <Box>
       <input
         className={classes.input}
-        placeholder="search country"
+        placeholder="Search Country"
         onChange={debouncedChangeHandler}
       />
     </Box>

@@ -5,7 +5,6 @@ import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 
 import { ThemeContext } from '../../App'
-import Search from '../Search/Search'
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import CircleIcon from '@mui/icons-material/Circle'
@@ -19,12 +18,35 @@ export default function Navbar() {
   const { setTheme } = React.useContext(ThemeContext)
   const { favorites } = useSelector((state: RootState) => state)
 
+  const AppThemes = [
+    {
+      id: 1,
+      action: () => setTheme('dark'),
+      title: 'Switch Theme',
+      cursor: 'pointer',
+      color: blueGrey[900],
+    },
+    {
+      id: 2,
+      action: () => setTheme('light'),
+      title: 'Switch Theme',
+      cursor: 'pointer',
+      color: grey[50],
+    },
+    {
+      id: 3,
+      action: () => setTheme('purple'),
+      title: 'Switch Theme',
+      cursor: 'pointer',
+      color: purple[900],
+    },
+  ]
+
   return (
     <Box className={classes.appbar}>
       <Link to="/" className={classes.link}>
         COUNTRY APP
       </Link>
-      <Search />
       <Box className={classes.box}>
         <Link to="/favorite" className={classes.link}>
           <Tooltip title="Favorite country list">
@@ -34,21 +56,21 @@ export default function Navbar() {
         </Link>
 
         <Box>
-          <Box onClick={() => setTheme('dark')}>
-            <Tooltip title="Switch theme">
-              <CircleIcon sx={{ color: blueGrey[900] }} fontSize="small" />
-            </Tooltip>
-          </Box>
-          <Box onClick={() => setTheme('light')}>
-            <Tooltip title="Switch theme">
-              <CircleIcon sx={{ color: grey[50] }} fontSize="small" />
-            </Tooltip>
-          </Box>
-          <Box onClick={() => setTheme('orange')}>
-            <Tooltip title="Switch theme">
-              <CircleIcon sx={{ color: purple[900] }} fontSize="small" />
-            </Tooltip>
-          </Box>
+          {AppThemes.map((AppTheme) => (
+            <Box key={AppTheme.id}>
+              <Box onClick={AppTheme.action}>
+                <Tooltip title={AppTheme.title}>
+                  <CircleIcon
+                    style={{
+                      color: AppTheme.color,
+                      cursor: AppTheme.cursor,
+                    }}
+                    fontSize="small"
+                  />
+                </Tooltip>
+              </Box>
+            </Box>
+          ))}
         </Box>
       </Box>
     </Box>

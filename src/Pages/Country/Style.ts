@@ -19,4 +19,8 @@ export default makeStyles(() => ({
     alignItems: 'center',
     height: '100vh',
   },
+  card: {
+    margin: '5% 35%',
+    width: 'fit-content',
+  },
 }))

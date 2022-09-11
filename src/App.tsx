@@ -1,7 +1,7 @@
 import React from 'react'
 import Routes from './Routes'
 
-import Navbar from '../src/components/Navbar/Navbar'
+import Navbar from './components/Navbar/Navbar'
 import { darkTheme } from './themes/dark'
 import { lightTheme } from './themes/light'
 import { purpleTheme } from './themes/purple'
@@ -10,7 +10,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 
 import './App.css'
 
-export type Mode = 'dark' | 'light' | 'orange'
+export type Mode = 'dark' | 'light' | 'purple'
 export const ThemeContext = React.createContext({
   mode: 'dark',
   setTheme: (mode: Mode) => console.log(mode),
@@ -25,7 +25,7 @@ export default function App() {
       return lightTheme
     case 'dark':
       return darkTheme
-    case 'orange':
+    case 'purple':
       return purpleTheme
 
     default:

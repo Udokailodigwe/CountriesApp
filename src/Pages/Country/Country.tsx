@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
-import { fetchCountries } from '../../redux/slices/countrySlice'
+import { fetchCountriesThunk } from '../../redux/slices/countrySlice'
 import { AppState } from '../../types'
 
-import { Typography, Box } from '@mui/material'
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Box,
+  Typography,
+} from '@mui/material/'
 
 import useStyles from './Style'
 
@@ -16,11 +24,11 @@ export default function Country() {
 
   const { name } = useParams<{ name: string }>()
   const country = useSelector((state: AppState) =>
-    state.countries.countryData.find((country) => country.name.common === name)
+    state.countries.countryData.find((country) => country.name === name)
   )
 
   useEffect(() => {
-    dispatch(fetchCountries())
+    dispatch(fetchCountriesThunk())
   }, [dispatch])
 
   if (!country) {
@@ -35,11 +43,43 @@ export default function Country() {
   }
 
   return (
-    <Box className={classes.box}>
-      <Typography>{country.name.common}</Typography>
-      <Box>
-        <img src={country.flags.png} alt="flag" />
-      </Box>
-    </Box>
+    <Card sx={{ Width: 345 }} className={classes.card}>
+      <CardMedia
+        component="img"
+        height="250"
+        image={country.flags.png}
+        alt="flag"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div" align="center">
+          {country.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Capital: {country.capital}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Languages: {Object.values(country.languages).join(', ')}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Currency: {Object.values(country.currencies).map((cur) => cur.name)}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Population:{country.population}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link to={'/'} className={classes.link}>
+          <Button
+            size="small"
+            sx={{
+              backgroundColor: '#bada55',
+              color: '#000',
+            }}
+          >
+            Back
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
   )
 }
