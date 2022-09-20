@@ -1,7 +1,7 @@
 export type Country = {
   name: string
 
-  capital: String[]
+  capital: string[]
   languages: {
     [name: string]: string
   }
