@@ -16,7 +16,7 @@ const initialState: countriesState = {
   countryData: [],
   countryDataRef: [],
   isLoading: true,
-  error: !true,
+  error: false,
 }
 
 export const countrySlice = createSlice({
@@ -60,7 +60,7 @@ export const countrySlice = createSlice({
       state.countryData = response
       state.countryDataRef = response
       state.isLoading = false
-      state.error = !true
+      state.error = false
     })
   },
 })
